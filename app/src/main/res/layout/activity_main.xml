@@ -84,7 +84,7 @@
             android:id="@+id/gender"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:text="Select Gender"
+            android:text="Gender"
             />
         <RadioGroup
             android:id="@+id/radioGroup1"
