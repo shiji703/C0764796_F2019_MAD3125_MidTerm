@@ -106,5 +106,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/radioButton1"
                 android:text="Female" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/radioButton2"
+                android:text="Others" />
+        </RadioGroup>
+    </LinearLayout>
 
 
