@@ -47,4 +47,12 @@ public class CRACustomer extends AppCompatActivity
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
+        dob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dob.setCursorVisible(false);
+                datePickerDialog = new DatePickerDialog(CRACustomer.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                }
+            }
 
