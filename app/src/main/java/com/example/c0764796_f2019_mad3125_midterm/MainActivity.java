@@ -36,3 +36,4 @@ public class CRACustomer extends AppCompatActivity
         setContentView(R.layout.activity_main);
         sinNumber = (EditText) findViewById(R.id.sinNumber);
         firstName = (EditText) findViewById(R.id.firstName);
+        lastName = (EditText) findViewById(R.id.lastName);
