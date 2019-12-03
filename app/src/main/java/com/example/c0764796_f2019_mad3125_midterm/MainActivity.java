@@ -40,3 +40,5 @@ public class CRACustomer extends AppCompatActivity
         dob = (EditText) findViewById(R.id.dob);
         grossIncome = (EditText) findViewById(R.id.grossIncome);
         rrspContributed = (EditText) findViewById(R.id.rrspContributed);
+        genderGroup = (RadioGroup) findViewById(R.id.radioGroup1);
+        
