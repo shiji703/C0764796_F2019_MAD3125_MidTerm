@@ -75,7 +75,6 @@ public class CRACustomer extends AppCompatActivity {
                 if (sinNumber.length() != 0 && dob.length() != 0 && firstName.length() != 0 && lastName.length() != 0 && grossIncome.length() != 0 && rrspContributed.length() != 0) {
                     String sinNum = String.valueOf(sinNumber.getText());
                     String dateofBirth = String.valueOf(dob.getText());
-                    final String mAge = String.valueOf(getAge(dateofBirth));
                     String fname = String.valueOf(firstName.getText());
                     String lname = String.valueOf(lastName.getText());
                     String grsinc = String.valueOf(grossIncome.getText());
@@ -138,67 +137,12 @@ public class CRACustomer extends AppCompatActivity {
                         } else {
                             System.out.println("Invalid Social Insurance Number.");
                         }
-                        if (mAge >= 18) {
-                            String mIncome = String.valueOf(grossIncome.getText());
-                            String upperString = fname.substring(0, 1).toUpperCase() + fname.substring(1);
-                            final String both = lname.toUpperCase() + "," + upperString;
-                            System.out.println("dddddddd  " + dateofBirth + "  " + mAge + " " + both);
-                            Date c = Calendar.getInstance().getTime();
-                            System.out.println("Current time => " + c);
-                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
-                            final String formattedDate = df.format(c);
-                            Intent intent = new Intent(CRACustomer.this, SecondActivity.class);
-                            intent.putExtra("fullName", both);
-                            intent.putExtra("age", mAge);
-                            intent.putExtra("currentdate", formattedDate);
-                            intent.putExtra("grossInc", grossInc);
-                            intent.putExtra("rrspContribution", rrspcntrr);
-                            startActivity(intent);
-                        } else {
-                            Typeface font = Typeface.createFromAsset(getAssets(), "fonts/SpaceQuestItalic-60Rx.ttf");
-                            SpannableString spannableString = new SpannableString(" Not eligible to file tax for current year 2019 ");
-                            spannableString.setSpan(
-                                    new ForegroundColorSpan(getResources().getColor(android.R.color.holo_red_dark)),
-                                    0,
-                                    spannableString.length(),
-                                    0);
-                            spannableString.setSpan(new TypefaceSpan(font), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            Toast.makeText(CRACustomer.this, spannableString, Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        //                            https://www.dreamincode.net/forums/topic/233396-validating-sin-number-reducing-amount-of-code/
-                        sinNumber.setError("Invalid Social Insurance Number");
+
                     }
-                } else {
-                    Toast.makeText(CRACustomer.this, "Must fill all the Fields", Toast.LENGTH_SHORT).show();
+
+
                 }
             }
         });
     }
-
-    private int getAge(String dobString) {
-        Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-        try {
-            date = sdf.parse(dobString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (date == null) return 0;
-        Calendar dob = Calendar.getInstance();
-        Calendar today = Calendar.getInstance();
-        dob.setTime(date);
-        int year = dob.get(Calendar.YEAR);
-        int month = dob.get(Calendar.MONTH);
-        int day = dob.get(Calendar.DAY_OF_MONTH);
-        dob.set(year, month + 1, day);
-        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
-            age--;
-        }
-        return age;
-    }
 }
-
-
-
