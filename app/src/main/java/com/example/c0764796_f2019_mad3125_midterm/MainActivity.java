@@ -38,3 +38,4 @@ public class CRACustomer extends AppCompatActivity
         firstName = (EditText) findViewById(R.id.firstName);
         lastName = (EditText) findViewById(R.id.lastName);
         dob = (EditText) findViewById(R.id.dob);
+        grossIncome = (EditText) findViewById(R.id.grossIncome);
