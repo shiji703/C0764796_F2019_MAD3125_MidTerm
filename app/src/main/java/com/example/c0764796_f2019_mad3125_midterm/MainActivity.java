@@ -41,4 +41,6 @@ public class CRACustomer extends AppCompatActivity
         grossIncome = (EditText) findViewById(R.id.grossIncome);
         rrspContributed = (EditText) findViewById(R.id.rrspContributed);
         genderGroup = (RadioGroup) findViewById(R.id.radioGroup1);
-        
+        int selectedId = genderGroup.getCheckedRadioButtonId();
+        radioGenderButton = (RadioButton) findViewById(selectedId);
+
