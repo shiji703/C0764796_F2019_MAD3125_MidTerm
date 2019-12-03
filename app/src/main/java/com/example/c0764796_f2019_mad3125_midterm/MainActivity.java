@@ -34,3 +34,4 @@ public class CRACustomer extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sinNumber = (EditText) findViewById(R.id.sinNumber);
