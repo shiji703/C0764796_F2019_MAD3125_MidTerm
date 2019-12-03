@@ -53,6 +53,21 @@ public class CRACustomer extends AppCompatActivity
                 dob.setCursorVisible(false);
                 datePickerDialog = new DatePickerDialog(CRACustomer.this,
                         new DatePickerDialog.OnDateSetListener() {
-                }
+                            @Override
+                            public void onDateSet(DatePicker view, int year1,
+                                                  int monthOfYear, int dayOfMonth) {
+                                year = year1;
+                                month = monthOfYear;
+                                day = dayOfMonth;
+                                datePickerDialog.updateDate(year, monthOfYear,
+                                        dayOfMonth);
+                                dob.setText((month + 1) + "/" + day + "/"
+                                        + year);
+                            }
+                        }, year, month, day);
+                datePickerDialog.setTitle("Select Date");
+                datePickerDialog.show();
             }
+        });
+
 
