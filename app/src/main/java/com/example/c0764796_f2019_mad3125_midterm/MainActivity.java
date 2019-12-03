@@ -19,8 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-public class CRACustomer extends AppCompatActivity
-{
+public class CRACustomer extends AppCompatActivity {
     EditText sinNumber, firstName, lastName, dob, grossIncome, rrspContributed;
     RadioGroup genderGroup;
     RadioButton radioGenderButton;
@@ -29,9 +28,9 @@ public class CRACustomer extends AppCompatActivity
     int day, month, year;
     private DatePickerDialog datePickerDialog;
     private int remaining;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sinNumber = (EditText) findViewById(R.id.sinNumber);
@@ -76,6 +75,7 @@ public class CRACustomer extends AppCompatActivity
                 if (sinNumber.length() != 0 && dob.length() != 0 && firstName.length() != 0 && lastName.length() != 0 && grossIncome.length() != 0 && rrspContributed.length() != 0) {
                     String sinNum = String.valueOf(sinNumber.getText());
                     String dateofBirth = String.valueOf(dob.getText());
+                    final String mAge = String.valueOf(getAge(dateofBirth));
                     String fname = String.valueOf(firstName.getText());
                     String lname = String.valueOf(lastName.getText());
                     String grsinc = String.valueOf(grossIncome.getText());
@@ -87,4 +87,118 @@ public class CRACustomer extends AppCompatActivity
                         String checkDigit = sinNum.substring(8);
                         System.out.println("The first eight digits are: " + eightDigits);
                         System.out.println("The Check-digit is: " + checkDigit);
+                        int total;
+                        int total2 = 0;
+                        int counter = 0;
+                        int first = Integer.parseInt(eightDigits.substring(0, 1)) * 1;
+                        int second = Integer.parseInt(eightDigits.substring(1, 2)) * 2;
+                        int third = Integer.parseInt(eightDigits.substring(2, 3)) * 1;
+                        int fourth = Integer.parseInt(eightDigits.substring(3, 4)) * 2;
+                        int fifth = Integer.parseInt(eightDigits.substring(4, 5)) * 1;
+                        int sixth = Integer.parseInt(eightDigits.substring(5, 6)) * 2;
+                        int seventh = Integer.parseInt(eightDigits.substring(6, 7)) * 1;
+                        int eighth = Integer.parseInt(eightDigits.substring(7, 8)) * 2;
+                        if (second > 9) {
+                            int firstHalf = second / 10;
+                            int secondHalf = second % 10;
+                            int sum = firstHalf + secondHalf;
+                            second = sum;
+                        }
+                        if (fourth > 9) {
+                            int firstHalf1 = fourth / 10;
+                            int secondHalf1 = fourth % 10;
+                            int sum1 = firstHalf1 + secondHalf1;
+                            fourth = sum1;
+                        }
+                        if (sixth > 9) {
+                            int firstHalf2 = sixth / 10;
+                            int secondHalf2 = sixth % 10;
+                            int sum2 = firstHalf2 + secondHalf2;
+                            sixth = sum2;
+                        }
+                        if (eighth > 9) {
+                            int firstHalf3 = eighth / 10;
+                            int secondHalf3 = eighth % 10;
+                            int sum3 = firstHalf3 + secondHalf3;
+                            eighth = sum3;
+                        }
+                        total = first + second + third + fourth + fifth + sixth + seventh + eighth;
+                        System.out.println("This is the total so far: " + total);
+                        total2 = total;
+                        while (total > 0) {
+                            counter++;
+                            total = total - 10;
+                        }
+                        int result = counter * 10;
+                        System.out.println("This is the next highest number divisble by 10: " + result);
+                        remaining = result - total2;
+                        String ewref = String.valueOf(sinNumber.getText());
+                        if (remaining == Integer.parseInt(checkDigit)) {
+                            System.out.println("You've entered a valid Social Insurance Number.");
+                        } else {
+                            System.out.println("Invalid Social Insurance Number.");
+                        }
+                        if (mAge >= 18) {
+                            String mIncome = String.valueOf(grossIncome.getText());
+                            String upperString = fname.substring(0, 1).toUpperCase() + fname.substring(1);
+                            final String both = lname.toUpperCase() + "," + upperString;
+                            System.out.println("dddddddd  " + dateofBirth + "  " + mAge + " " + both);
+                            Date c = Calendar.getInstance().getTime();
+                            System.out.println("Current time => " + c);
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy");
+                            final String formattedDate = df.format(c);
+                            Intent intent = new Intent(CRACustomer.this, SecondActivity.class);
+                            intent.putExtra("fullName", both);
+                            intent.putExtra("age", mAge);
+                            intent.putExtra("currentdate", formattedDate);
+                            intent.putExtra("grossInc", grossInc);
+                            intent.putExtra("rrspContribution", rrspcntrr);
+                            startActivity(intent);
+                        } else {
+                            Typeface font = Typeface.createFromAsset(getAssets(), "fonts/SpaceQuestItalic-60Rx.ttf");
+                            SpannableString spannableString = new SpannableString(" Not eligible to file tax for current year 2019 ");
+                            spannableString.setSpan(
+                                    new ForegroundColorSpan(getResources().getColor(android.R.color.holo_red_dark)),
+                                    0,
+                                    spannableString.length(),
+                                    0);
+                            spannableString.setSpan(new TypefaceSpan(font), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            Toast.makeText(CRACustomer.this, spannableString, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        //                            https://www.dreamincode.net/forums/topic/233396-validating-sin-number-reducing-amount-of-code/
+                        sinNumber.setError("Invalid Social Insurance Number");
+                    }
+                } else {
+                    Toast.makeText(CRACustomer.this, "Must fill all the Fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private int getAge(String dobString) {
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        try {
+            date = sdf.parse(dobString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date == null) return 0;
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+        dob.setTime(date);
+        int year = dob.get(Calendar.YEAR);
+        int month = dob.get(Calendar.MONTH);
+        int day = dob.get(Calendar.DAY_OF_MONTH);
+        dob.set(year, month + 1, day);
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+        return age;
+    }
+}
+
+
 
