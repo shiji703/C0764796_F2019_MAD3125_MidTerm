@@ -70,4 +70,21 @@ public class CRACustomer extends AppCompatActivity
             }
         });
 
+        findViewById(R.id.btnsubmit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sinNumber.length() != 0 && dob.length() != 0 && firstName.length() != 0 && lastName.length() != 0 && grossIncome.length() != 0 && rrspContributed.length() != 0) {
+                    String sinNum = String.valueOf(sinNumber.getText());
+                    String dateofBirth = String.valueOf(dob.getText());
+                    String fname = String.valueOf(firstName.getText());
+                    String lname = String.valueOf(lastName.getText());
+                    String grsinc = String.valueOf(grossIncome.getText());
+                    String rrspcntr = String.valueOf(rrspContributed.getText());
+                    double grossInc = Double.parseDouble(grsinc);
+                    double rrspcntrr = Double.parseDouble(rrspcntr);
+                    if (sinNum.length() == 9) {
+                        String eightDigits = sinNum.substring(0, 8);
+                        String checkDigit = sinNum.substring(8);
+                        System.out.println("The first eight digits are: " + eightDigits);
+                        System.out.println("The Check-digit is: " + checkDigit);
 
