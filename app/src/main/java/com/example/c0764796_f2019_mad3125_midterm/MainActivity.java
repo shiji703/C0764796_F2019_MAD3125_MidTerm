@@ -44,4 +44,7 @@ public class CRACustomer extends AppCompatActivity
         int selectedId = genderGroup.getCheckedRadioButtonId();
         radioGenderButton = (RadioButton) findViewById(selectedId);
         calendar = Calendar.getInstance();
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        month = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
 
